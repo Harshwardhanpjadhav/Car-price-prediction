@@ -31,3 +31,35 @@ if st.button('Predict Price'):
 
     y_pred = pipe.predict(take_input)
     st.title("Rs : " + str(np.round(y_pred[0])))
+
+    import pandas as pd
+
+    df = pd.read_csv('1.csv')
+    df['Brand'] = df['name'].str.split(expand=True)[0]
+
+    st.header('New cars Suggested based on your old car price')
+    r = (str(np.round(y_pred[0])))
+    z = float(r)
+    k1 = df['Brand'] == brand
+    k2 = df['selling_price'] <= z
+    k = df[k1 & k2]
+    st.subheader("Cars with same brand")
+    st.table(k.head())
+    st.subheader("Other brand")
+    c1 = df['Brand'] != brand
+    c2 = df['selling_price'] <= z
+    f = df[c1 & c2]
+
+    st.table(f.head())
+
+
+##############################################################
+
+# import pandas as pd
+#
+# df = pd.read_csv('1.csv')
+#
+# st.header('Cars related to your price')
+# r = str(np.round(y_pred[0]))
+# c = df[df['selling_price']>=r]
+# st.table(r)
